@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TaskItem",
+  "description": "One benchmark item in the PocketEval golden set.",
+  "type": "object",
+  "required": ["item_id", "task", "item_version", "input", "expected", "source", "verified_by", "verified_on"],
+  "additionalProperties": false,
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "description": "Stable identifier for this benchmark item."
+    },
+    "task": {
+      "type": "string",
+      "enum": ["A", "B"],
+      "description": "Task type: A=receipt extraction, B=intent classification. Additional task types will be added when their expected schemas are defined."
+    },
+    "item_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Monotonically increasing version. Increment when input or expected changes."
+    },
+    "input": {
+      "type": "string",
+      "description": "The prompt or document presented to the model."
+    },
+    "expected": {
+      "description": "Ground-truth answer. Structure depends on task.",
+      "oneOf": [
+        {
+          "title": "TaskA_Expected",
+          "description": "Expected output for Task A (receipt extraction).",
+          "type": "object",
+          "required": ["merchant", "date", "currency", "subtotal", "tax", "total", "line_items"],
+          "additionalProperties": false,
+          "properties": {
+            "merchant": {"type": "string"},
+            "date": {
+              "type": "string",
+              "format": "date",
+              "description": "ISO 8601 date (YYYY-MM-DD)."
+            },
+            "currency": {
+              "type": "string",
+              "pattern": "^[A-Z]{3}$",
+              "description": "ISO 4217 currency code."
+            },
+            "subtotal": {
+              "type": "string",
+              "description": "Decimal string, e.g. \"12.50\". Never a float."
+            },
+            "tax": {
+              "type": "string",
+              "description": "Decimal string."
+            },
+            "total": {
+              "type": "string",
+              "description": "Decimal string."
+            },
+            "line_items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["description", "quantity", "unit_price"],
+                "additionalProperties": false,
+                "properties": {
+                  "description": {"type": "string"},
+                  "quantity": {"type": "number"},
+                  "unit_price": {
+                    "type": "string",
+                    "description": "Decimal string."
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "TaskB_Expected",
+          "description": "Expected output for Task B (intent classification).",
+          "type": "object",
+          "required": ["label"],
+          "additionalProperties": false,
+          "properties": {
+            "label": {
+              "type": "string",
+              "enum": [
+                "billing",
+                "technical_support",
+                "account_access",
+                "cancellation",
+                "product_query",
+                "other"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "source": {
+      "type": "string",
+      "description": "Where the ground truth came from (citation, dataset name, or description)."
+    },
+    "verified_by": {
+      "type": "string",
+      "description": "Identifier of the human reviewer who verified this item."
+    },
+    "verified_on": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 date on which verification was completed."
+    }
+  }
+}

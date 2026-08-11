@@ -1,0 +1,46 @@
+{
+  "_note": "GRADER LOGIC TEST FIXTURES ONLY. These are synthetic inputs invented to exercise grader code paths. They are NOT benchmark golden-set items and must never be used as evaluation data.",
+  "extraction": {
+    "expected_receipt": {
+      "merchant": "Corner Bakery",
+      "date": "2024-03-15",
+      "currency": "USD",
+      "subtotal": "12.50",
+      "tax": "1.25",
+      "total": "13.75",
+      "line_items": [
+        {
+          "description": "Croissant",
+          "quantity": 2,
+          "unit_price": "3.50"
+        },
+        {
+          "description": "Coffee",
+          "quantity": 1,
+          "unit_price": "5.50"
+        }
+      ]
+    },
+    "outputs": {
+      "correct_json": "{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\", \"subtotal\": \"12.50\", \"tax\": \"1.25\", \"total\": \"13.75\", \"line_items\": [{\"description\": \"Croissant\", \"quantity\": 2, \"unit_price\": \"3.50\"}, {\"description\": \"Coffee\", \"quantity\": 1, \"unit_price\": \"5.50\"}]}",
+      "fenced_json": "```json\n{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\", \"subtotal\": \"12.50\", \"tax\": \"1.25\", \"total\": \"13.75\", \"line_items\": [{\"description\": \"Croissant\", \"quantity\": 2, \"unit_price\": \"3.50\"}, {\"description\": \"Coffee\", \"quantity\": 1, \"unit_price\": \"5.50\"}]}\n```",
+      "with_preamble": "Sure, here is the extracted receipt:\n{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\", \"subtotal\": \"12.50\", \"tax\": \"1.25\", \"total\": \"13.75\", \"line_items\": [{\"description\": \"Croissant\", \"quantity\": 2, \"unit_price\": \"3.50\"}, {\"description\": \"Coffee\", \"quantity\": 1, \"unit_price\": \"5.50\"}]}",
+      "with_trailing_prose": "{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\", \"subtotal\": \"12.50\", \"tax\": \"1.25\", \"total\": \"13.75\", \"line_items\": [{\"description\": \"Croissant\", \"quantity\": 2, \"unit_price\": \"3.50\"}, {\"description\": \"Coffee\", \"quantity\": 1, \"unit_price\": \"5.50\"}]}\nHope that helps!",
+      "total_as_string_wrong_type": "{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\", \"subtotal\": \"12.50\", \"tax\": \"1.25\", \"total\": 13.75, \"line_items\": [{\"description\": \"Croissant\", \"quantity\": 2, \"unit_price\": \"3.50\"}, {\"description\": \"Coffee\", \"quantity\": 1, \"unit_price\": \"5.50\"}]}",
+      "truncated_json": "{\"merchant\": \"Corner Bakery\", \"date\": \"2024-03-15\", \"currency\": \"USD\"",
+      "empty_output": ""
+    }
+  },
+  "classification": {
+    "outputs": {
+      "exact_label": "billing",
+      "label_with_preamble": "The intent is billing.",
+      "label_in_sentence": "This message is about billing and account questions.",
+      "two_labels_present": "This could be billing or cancellation.",
+      "no_label_present": "I need help with my order.",
+      "empty_output": "",
+      "fenced_label": "```\nbilling\n```",
+      "label_with_trailing_punct": "billing."
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Result",
+  "description": "One result line in a PocketEval JSONL results file.",
+  "type": "object",
+  "required": [
+    "item_id",
+    "item_version",
+    "run_index",
+    "timestamp",
+    "model_id",
+    "model_version",
+    "os_version",
+    "device_model",
+    "raw_output",
+    "parsed_output",
+    "schema_valid",
+    "correct_strict",
+    "correct_lenient",
+    "time_to_first_token_ms",
+    "total_latency_ms",
+    "decode_tokens_per_sec",
+    "peak_memory_mb",
+    "thermal_state",
+    "battery_delta_pct"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "description": "Matches item_id in the corresponding TaskItem."
+    },
+    "item_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Version of the task item used in this run."
+    },
+    "run_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero-based index of this run within a variance trial."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when inference started."
+    },
+    "model_id": {
+      "type": "string",
+      "description": "Model identifier as reported by the runtime."
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Specific model version or checkpoint string."
+    },
+    "os_version": {
+      "type": "string",
+      "description": "Operating system version string of the device."
+    },
+    "device_model": {
+      "type": "string",
+      "description": "Device model identifier, e.g. iPhone16,2."
+    },
+    "raw_output": {
+      "type": "string",
+      "description": "Verbatim text produced by the model. Always present, never omitted."
+    },
+    "parsed_output": {
+      "description": "Structured object parsed from raw_output, or null if parsing failed.",
+      "oneOf": [
+        {"type": "object"},
+        {"type": "null"}
+      ]
+    },
+    "schema_valid": {
+      "type": "boolean",
+      "description": "True if parsed_output validates against the task expected schema."
+    },
+    "correct_strict": {
+      "type": "boolean",
+      "description": "True if the answer is exactly correct after normalisation."
+    },
+    "correct_lenient": {
+      "type": "boolean",
+      "description": "True if the answer is correct under lenient matching rules."
+    },
+    "time_to_first_token_ms": {
+      "type": ["number", "null"],
+      "description": "Milliseconds from prompt submission to first token. Null if not captured."
+    },
+    "total_latency_ms": {
+      "type": ["number", "null"],
+      "description": "Milliseconds from prompt submission to last token. Null if not captured."
+    },
+    "decode_tokens_per_sec": {
+      "type": ["number", "null"],
+      "description": "Decode throughput in tokens per second. Null if not captured."
+    },
+    "peak_memory_mb": {
+      "type": ["number", "null"],
+      "description": "Peak resident memory in megabytes during inference. Null if not captured."
+    },
+    "thermal_state": {
+      "type": ["string", "null"],
+      "description": "Thermal state reported by the OS at end of inference, e.g. nominal/fair/serious/critical."
+    },
+    "battery_delta_pct": {
+      "type": ["number", "null"],
+      "description": "Change in battery percentage during inference (negative means drain). Null if not captured."
+    }
+  }
+}
